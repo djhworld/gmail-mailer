@@ -54,7 +54,8 @@ module GmailMailer
     attr_accessor :to, :subject, :body 
     attr_reader :attachments
     def initialize(to, subject="", body="")
-      @to = to
+      raise ArgumentError, "You must specify an email address to send the message to!" if(to.nil? or to.empty?)
+      @to = to 
       @subject = subject
       @body = body
       @attachments = []
