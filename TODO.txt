@@ -1,0 +1,3 @@
+changes needed for next version: -
+- Add more validation for email configuration
+- Add better handling for SMTP errors
