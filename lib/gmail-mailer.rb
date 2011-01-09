@@ -9,7 +9,6 @@ module GmailMailer
 
     def send(message)
       mail = Mail.new do
-        from message.from
         to message.to
         subject message.subject
         body message.body
@@ -52,11 +51,10 @@ module GmailMailer
   end
 
   class Message
-    attr_accessor :to, :from, :subject, :body 
+    attr_accessor :to, :subject, :body 
     attr_reader :attachments
-    def initialize(to, from, subject="", body="")
+    def initialize(to, subject="", body="")
       @to = to
-      @from = from
       @subject = subject
       @body = body
       @attachments = []
