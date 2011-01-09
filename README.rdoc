@@ -2,6 +2,28 @@
 
 simple gem to allow you to send emails using your gmail account (without having to fiddle around with passwords)
 
+= Usage
+== Example application
+    require 'gmail-mailer'
+    email_credentials = 
+    {
+        :smtp_server=>"smtp.gmail.com", 
+        :smtp_port=>587, 
+        :smtp_consumer_key=>"anonymous", 
+        :smtp_consumer_secret=>"anonymous", 
+        :smtp_oauth_token=>"<your outh_token>",
+        :smtp_oauth_token_secret=>"<your ouath token secret>", 
+        :host=>"gmail.com", 
+        :email=>"<your gmail address>"
+    }
+
+    mailer = GmailMailer::Mailer.new(config)
+    message = GmailMailer::Message.new("djharperuk@gmail.com","djharperuk@gmail.com", "Hello Subject", "Hello Body")
+    message.add_attachment(File.expand_path('~/sal.rb'))
+    mailer.sendMessage(message)
+       
+
+
 == Contributing to gmail-mailer
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
