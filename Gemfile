@@ -8,6 +8,6 @@ source "http://rubygems.org"
 group :development do
     gem "bundler", "~> 1.0.0"
     gem "jeweler", "~> 1.5.2"
-    gem "mail","~> 2.2.13"
+    gem "mail","~> 2.2.14"
     gem "gmail_xoauth", "~> 0.3.0"
 end

@@ -3,6 +3,19 @@
 simple gem to allow you to send emails using your gmail account (without having to fiddle around with passwords)
 
 = Usage
+== Creating a message
+    message = GmailMailer::Message.new("to", "from", "Hello Subject", "Hello Body")
+
+== Adding attachments
+((*NOTE:*))Only single attachments work at the current moment in time 
+    message.add_attachment(Filepath)
+
+== Setting up gmail-mailer
+You will need to provide mailer with a hashmap containing the ouath details for your account.
+
+== Sending a message
+    mailer.send(message)
+
 == Example application
     require 'gmail-mailer'
     email_credentials = 
@@ -17,13 +30,12 @@ simple gem to allow you to send emails using your gmail account (without having 
         :email=>"<your gmail address>"
     }
 
-    mailer = GmailMailer::Mailer.new(config)
-    message = GmailMailer::Message.new("djharperuk@gmail.com","djharperuk@gmail.com", "Hello Subject", "Hello Body")
-    message.add_attachment(File.expand_path('~/sal.rb'))
-    mailer.sendMessage(message)
+    message = GmailMailer::Message.new("to","from", "Hello Subject", "Hello Body")
+    message.add_attachment(File.expand_path('~/image.png'))
+
+    mailer = GmailMailer::Mailer.new(email_credentials)
+    mailer.send(message)
        
-
-
 == Contributing to gmail-mailer
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

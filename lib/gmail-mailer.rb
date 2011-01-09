@@ -7,14 +7,14 @@ module GmailMailer
       @email_credentials = credentials
     end
 
-    def sendMessage(message)
+    def send(message)
       mail = Mail.new do
         from message.from
         to message.to
         subject message.subject
         body message.body
-        if(message.attachment != nil)
-          add_file message.attachment 
+        if(!message.attachments.empty?)
+          add_file message.attachments.first 
         end
       end
       sendSMTP(mail)
@@ -52,13 +52,17 @@ module GmailMailer
   end
 
   class Message
-    attr_reader :to, :from, :subject, :body, :attachment
-    def initialize(to, from, attachment=nil, subject="", body="")
+    attr_reader :to, :from, :subject, :body, :attachments
+    def initialize(to, from, subject="", body="")
       @to = to
       @from = from
       @subject = subject
       @body = body
-      @attachment = attachment
+      @attachments = []
+    end
+
+    def add_attachment(filepath)
+      @attachments << filepath if !filepath.nil? or !filepath.empty?
     end
   end
 end
