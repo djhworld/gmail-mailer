@@ -1,6 +1,6 @@
 = gmail-mailer
 
-Description goes here.
+simple gem to allow you to send emails using your gmail account (without having to fiddle around with passwords)
 
 == Contributing to gmail-mailer
  
