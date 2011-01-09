@@ -3,3 +3,4 @@ changes needed for next version: -
 - Add better handling for SMTP errors
 - Remove From field
 - Remove attachments from constructor
+- put validation on "TO" field. 
