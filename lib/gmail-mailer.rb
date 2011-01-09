@@ -52,7 +52,8 @@ module GmailMailer
   end
 
   class Message
-    attr_reader :to, :from, :subject, :body, :attachments
+    attr_accessor :to, :from, :subject, :body 
+    attr_reader :attachments
     def initialize(to, from, subject="", body="")
       @to = to
       @from = from
