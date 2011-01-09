@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gmail-mailer}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Harper"]
@@ -14,14 +14,15 @@ Gem::Specification.new do |s|
   s.email = %q{djharperuk@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".document",
+    "Changelog.md",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "TODO.txt",
     "VERSION",
