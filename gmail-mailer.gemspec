@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "gmail-mailer-0.1.0.gem",
+    "gmail-mailer.gemspec",
     "lib/gmail-mailer.rb"
   ]
   s.homepage = %q{http://github.com/djhworld/gmail-mailer}
