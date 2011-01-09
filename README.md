@@ -1,4 +1,4 @@
-simple gem to allow you to send emails using your gmail account (without having to fiddle around with passwords)
+Programatically send emails using a given gmail account. No username/passwords needed, just use your OAUTH credentials
 
 ## Usage
 ### Creating a message
@@ -28,9 +28,11 @@ You will need to provide mailer with a hashmap containing the ouath details for 
         :email=>"<your gmail address>"
     }
 
+    # construct message
     message = GmailMailer::Message.new("to","from", "Hello Subject", "Hello Body")
     message.add_attachment(File.expand_path('~/image.png'))
 
+    # construct mailer using the email_credentials defined above
     mailer = GmailMailer::Mailer.new(email_credentials)
     mailer.send(message)
        
