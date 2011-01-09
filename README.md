@@ -5,8 +5,8 @@ simple gem to allow you to send emails using your gmail account (without having 
     message = GmailMailer::Message.new("to", "from", "Hello Subject", "Hello Body")
 
 ### Adding attachments
-*NOTE:* Only single attachments work at the current moment in time 
-    message.add_attachment(Filepath)
+**NOTE:** Only single attachments work at the current moment in time 
+    message.add_attachment("<path-to-file>")
 
 ### Setting up gmail-mailer
 You will need to provide mailer with a hashmap containing the ouath details for your account.
