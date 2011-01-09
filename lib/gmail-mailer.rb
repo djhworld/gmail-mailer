@@ -51,18 +51,24 @@ module GmailMailer
   end
 
   class Message
-    attr_accessor :to, :subject, :body 
-    attr_reader :attachments
+    attr_accessor :subject, :body 
+    attr_reader :to, :attachments
     def initialize(to, subject="", body="")
-      raise ArgumentError, "You must specify an email address to send the message to!" if(to.nil? or to.empty?)
-      @to = to 
+      self.to=(to)
       @subject = subject
       @body = body
       @attachments = []
     end
 
     def add_attachment(filepath)
-      @attachments << filepath if !filepath.nil? or !filepath.empty?
+      raise ArgumentError, "You must specify a file to send" if filepath.nil? or filepath.empty?
+      @attachments << filepath 
+    end
+
+    def to=(to) 
+      raise ArgumentError, "You must specify an email address to send the message to!" if(to.nil? or to.empty?)
+      @to = to.join(";") if to.is_a?Array
+      @to = to if to.is_a?String 
     end
   end
 end
