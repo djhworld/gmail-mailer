@@ -12,10 +12,13 @@ module GmailMailer
         to message.to
         subject message.subject
         body message.body
-        if(!message.attachments.empty?)
-          add_file message.attachments.first 
+      end
+      if(!message.attachments.empty?)
+        message.attachments.each do |attachment|
+          mail.add_file(attachment)
         end
       end
+
       sendSMTP(mail)
     end
 
@@ -62,6 +65,8 @@ module GmailMailer
 
     def add_attachment(filepath)
       raise ArgumentError, "You must specify a file to send" if filepath.nil? or filepath.empty?
+      raise ArgumentError, "File #{filepath} does not exist" if !File.exist?(filepath)  
+      raise ArgumentError, "#{filepath} file is a directory, this is not supported" if File.directory?(filepath)
       @attachments << filepath 
     end
 

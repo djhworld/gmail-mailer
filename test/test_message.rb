@@ -1,13 +1,29 @@
 require "gmail-mailer.rb"
+require 'fileutils'
 require 'test/unit'
 class TestMessage < Test::Unit::TestCase
   def setup
+    @files = ['file1','file2','file3']
+    @dir = File.expand_path("./tmpdir")
+    Dir.mkdir(@dir)
+    createTmpFiles
     @msg = GmailMailer::Message.new("to","subject","body")
   end
 
   def teardown
+    @files.each do |file|
+      FileUtils.rm(file)
+    end
+    Dir.rmdir(@dir)
     @msg = nil
   end
+  
+  def createTmpFiles
+    @files.each do |file|
+      FileUtils.touch(file)
+    end
+  end
+
 
   def test_constructor
     @msg = GmailMailer::Message.new("djharperuk@gmail.com","Subject","Body")
@@ -54,16 +70,14 @@ class TestMessage < Test::Unit::TestCase
   
 
   def test_add_attachment
-    @msg.add_attachment('test')
+    @msg.add_attachment(@files.first)
     assert_equal(1,@msg.attachments.count, "There should be 1 item in the list!")
   end
 
   def test_add_attachments
-    @msg.add_attachment('test')
-    @msg.add_attachment('test')
-    @msg.add_attachment('test')
-    @msg.add_attachment('test')
-    assert_equal(4,@msg.attachments.count, "There should be 1 item in the list!")
+    @msg.add_attachment(@files.pop)
+    @msg.add_attachment(@files.pop)
+    assert_equal(2,@msg.attachments.count, "There should be 2 items in the list!")
   end
 
   def test_add_attachment_with_empty_string
@@ -77,9 +91,12 @@ class TestMessage < Test::Unit::TestCase
   end
 
   def test_add_file_that_doesnt_exist
-    assert_raise(IOError) { @msg.add_attachment("test") }
+    assert_raise(ArgumentError) { @msg.add_attachment("asjdasjdhasdjhaksjdh") }
   end
+
+  def test_add_file_that_is_actually_a_dir
+    assert_raise(ArgumentError) { @msg.add_attachment(@dir) }
+  end
+
 end
-
-
 
