@@ -5,7 +5,6 @@ Programatically send emails using a given gmail account. No username/passwords n
     message = GmailMailer::Message.new("to", "Hello Subject", "Hello Body")
 
 ### Adding attachments
-**NOTE:** Only single attachments work at the current moment in time 
     message.add_attachment("<path-to-file>")
 
 ### Setting up gmail-mailer
@@ -18,13 +17,8 @@ You will need to provide mailer with a hashmap containing the ouath details for 
     require 'gmail-mailer'
     email_credentials = 
     {
-        :smtp_server=>"smtp.gmail.com", 
-        :smtp_port=>587, 
-        :smtp_consumer_key=>"anonymous", 
-        :smtp_consumer_secret=>"anonymous", 
         :smtp_oauth_token=>"<your outh_token>",
         :smtp_oauth_token_secret=>"<your ouath token secret>", 
-        :host=>"gmail.com", 
         :email=>"<your gmail address>"
     }
 
