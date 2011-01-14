@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gmail-mailer}
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Harper"]
-  s.date = %q{2011-01-09}
+  s.date = %q{2011-01-14}
   s.description = %q{Programatically send emails using a given gmail account. No username/passwords needed, just use your OAUTH credentials}
   s.email = %q{djharperuk@gmail.com}
   s.extra_rdoc_files = [
@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "Rakefile",
-    "TODO.txt",
     "VERSION",
     "gmail-mailer.gemspec",
     "lib/gmail-mailer.rb"
@@ -32,6 +31,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/djhworld/gmail-mailer}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
+  s.required_ruby_version = Gem::Requirement.new(">= 1.9.2")
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Send emails using a your gmail account (via OAUTH)}
 
