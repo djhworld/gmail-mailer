@@ -24,9 +24,14 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "Rakefile",
+    "TODO.md",
     "VERSION",
     "gmail-mailer.gemspec",
-    "lib/gmail-mailer.rb"
+    "lib/gmail-mailer.rb",
+    "test/files/email_conf",
+    "test/mail_test_send.rb",
+    "test/test_mailer.rb",
+    "test/test_message.rb"
   ]
   s.homepage = %q{http://github.com/djhworld/gmail-mailer}
   s.licenses = ["MIT"]
@@ -34,6 +39,11 @@ Gem::Specification.new do |s|
   s.required_ruby_version = Gem::Requirement.new(">= 1.9.2")
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Send emails using a your gmail account (via OAUTH)}
+  s.test_files = [
+    "test/mail_test_send.rb",
+    "test/test_mailer.rb",
+    "test/test_message.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
