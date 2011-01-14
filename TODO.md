@@ -6,3 +6,4 @@
 ** Need some sort of mock testing framework for SMTP messages
 * add support for adding directories
 * add size limits/checking for attachments
+* reconfigure the way mailer sends message, queue messages up THEN send

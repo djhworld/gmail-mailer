@@ -1,0 +1,3 @@
+smtp_oauth_token: 123456789
+smtp_oauth_token_secret: 123456789
+email: d@gmail.com
