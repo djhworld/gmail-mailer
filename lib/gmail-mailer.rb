@@ -9,7 +9,7 @@ module GmailMailer
   class Mailer
     def initialize(credentials)
       result = validate_credentials(credentials)
-      raise ArgumentError, result if result.nil? == false     
+      raise ArgumentError, "ERROR: Email credentials are invalid: -\n\n - #{result}" if result.nil? == false     
       @email_credentials = credentials
     end
 

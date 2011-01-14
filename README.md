@@ -1,5 +1,8 @@
 Programatically send emails using a given gmail account. No username/passwords needed, just use your OAUTH credentials
 
+## Information
+This has only been tested on ruby 1.9.2
+
 ## Usage
 ### Creating a message
     message = GmailMailer::Message.new("to", "Hello Subject", "Hello Body")
@@ -9,6 +12,12 @@ Programatically send emails using a given gmail account. No username/passwords n
 
 ### Setting up gmail-mailer
 You will need to provide mailer with a hashmap containing the ouath details for your account.
+    email_credentials = 
+    {
+        :smtp_oauth_token=>"<your outh_token>",
+        :smtp_oauth_token_secret=>"<your ouath token secret>", 
+        :email=>"<your gmail address>"
+    }
 
 ### Sending a message
     mailer.send(message)

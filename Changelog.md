@@ -1,5 +1,8 @@
 # gmail-mailer Changelog
 
+### 0.4.2
+* Made error messages for credentials more detailed
+
 ### 0.4.0
 * Added further validation on the `to` field
 * Added ability to pass an array into the `to` field which will convert the `to` to a semi-colon delimited string
