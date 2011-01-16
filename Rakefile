@@ -31,6 +31,12 @@ Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
+ end
+
+Rake::TestTask.new(:test_mail) do |test|
+  test.libs << 'lib' << 'test'
+  test.verbose = true
+  test.test_files = ['test/mail_test_send.rb']
 
   #tests sending a mail using user credentials (if provided)
   root = File.expand_path(File.dirname(__FILE__))
@@ -41,7 +47,6 @@ Rake::TestTask.new(:test) do |test|
     puts
     puts "Will test sending a mail using your user credentials found in #{file}"
     puts
-    test.test_files = ['test/mail_test_send.rb']
   else
     puts
     puts "WILL NOT BE TESTING MAIL SEND FUNCTIONALITY. IF YOU WISH TO TEST THIS, CREATE A FILE WITH THE FOLLOWING: - "

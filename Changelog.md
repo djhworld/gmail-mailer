@@ -1,5 +1,10 @@
 # gmail-mailer Changelog
 
+### 0.4.3
+* Added attachment limits and recipient limits for messages
+* Added retry functionality on sending mail
+* Rejigged validation a little
+
 ### 0.4.2
 * Made error messages for credentials more detailed
 

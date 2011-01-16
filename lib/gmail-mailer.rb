@@ -6,10 +6,16 @@ module GmailMailer
   SMTP_HOST = "gmail.com"
   SMTP_CONSUMER_KEY = "anonymous"
   SMTP_CONSUMER_SECRET = "anonymous"
+  ATTACHMENTS_SIZE_LIMIT = (1024*1024)*25 #25mb attachment limit
+  RECIPIENT_LIMIT = 500
+  MAX_RETRY = 2
   class Mailer
     def initialize(credentials)
-      result = validate_credentials(credentials)
-      raise ArgumentError, "ERROR: Email credentials are invalid: -\n\n - #{result}" if result.nil? == false     
+      begin
+        validate_credentials(credentials)
+      rescue
+        raise
+      end
       @email_credentials = credentials
     end
 
@@ -24,11 +30,23 @@ module GmailMailer
           mail.add_file(attachment)
         end
       end
-      sendSMTP(mail)
+
+      retry_attempts = 0
+
+      begin
+        send_smtp(mail)
+      rescue => message
+        puts "Error occured attempting to send mail => #{message}"
+
+        raise Exception, message if(retry_attempts > MAX_RETRY)
+        puts "Retry: #{retry_attempts+1}/#{MAX_RETRY+1}"
+        retry_attempts = retry_attempts.succ
+        retry
+      end
     end
 
     # Use gmail_xoauth to send email
-    def sendSMTP(mail)
+    def send_smtp(mail)
       smtp = Net::SMTP.new(SMTP_SERVER, SMTP_PORT)
       smtp.enable_starttls_auto
       secret = {
@@ -45,10 +63,11 @@ module GmailMailer
     end
 
     def validate_credentials(creds)
-      return "The credentials you have posted are nil" if creds.nil?
-      return "You must provide a smtp_oauth_token value!" if !creds.key?:smtp_oauth_token or creds[:smtp_oauth_token].nil? or creds[:smtp_oauth_token].empty?
-      return "You must provide a smtp_oauth_token_secret value!" if !creds.key?:smtp_oauth_token_secret or creds[:smtp_oauth_token_secret].nil? or creds[:smtp_oauth_token_secret].empty?
-      return "You must provide an email value" if !creds.key?:email or creds[:email].nil? or creds[:email].empty?
+      msg = "ERROR: Email credentials are invalid:"
+      raise ArgumentError, "#{msg} The credentials you have posted are nil" if creds.nil?
+      raise ArgumentError, "#{msg} You must provide a smtp_oauth_token value!" if !creds.key?:smtp_oauth_token or creds[:smtp_oauth_token].nil? or creds[:smtp_oauth_token].empty?
+      raise ArgumentError, "#{msg} You must provide a smtp_oauth_token_secret value!" if !creds.key?:smtp_oauth_token_secret or creds[:smtp_oauth_token_secret].nil? or creds[:smtp_oauth_token_secret].empty?
+      raise ArgumentError, "#{msg} You must provide an email value" if !creds.key?:email or creds[:email].nil? or creds[:email].empty?
       return nil 
     end
   end
@@ -67,13 +86,28 @@ module GmailMailer
       raise ArgumentError, "You must specify a file to send" if filepath.nil? or filepath.empty?
       raise ArgumentError, "File #{filepath} does not exist" if !File.exist?(filepath)  
       raise ArgumentError, "#{filepath} file is a directory, this is not supported" if File.directory?(filepath)
+
+      size = File.size(filepath)
+      print "Adding attachment: #{filepath} " 
+      printf("(%5.4f kb)",size.to_f/1024.0)
+      puts
+      raise ArgumentError, "There is a #{ATTACHMENTS_SIZE_LIMIT/1024/1024}mb limit on attachments}" if (get_attachments_size + size) > ATTACHMENTS_SIZE_LIMIT
       @attachments << filepath 
     end
 
     def to=(to) 
       raise ArgumentError, "You must specify an email address to send the message to!" if(to.nil? or to.empty?)
-      @to = to.join(";") if to.is_a?Array
+      raise ArgumentError, "You cannot send a message to more than #{RECIPIENT_LIMIT} recipients" if to.is_a?Array and to.count > RECIPIENT_LIMIT
+      @to = to.join(";") if to.is_a?Array 
       @to = to if to.is_a?String 
+    end
+
+    def get_attachments_size
+      attachments_size = 0
+      @attachments.each do |attachment|
+        attachments_size += File.size(attachment)
+      end
+      return attachments_size
     end
   end
 end

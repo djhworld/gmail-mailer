@@ -2,6 +2,12 @@ require "gmail-mailer.rb"
 require 'fileutils'
 require 'test/unit'
 class TestMessage < Test::Unit::TestCase
+  def create_file(filename, size)
+    File.open(filename,'w') do |f|
+      f.puts "-"*size
+    end
+  end
+
   def setup
     @files = ['file1','file2','file3']
     @dir = File.expand_path("./tmpdir")
@@ -20,10 +26,9 @@ class TestMessage < Test::Unit::TestCase
   
   def createTmpFiles
     @files.each do |file|
-      FileUtils.touch(file)
+      create_file(file, rand(1024))
     end
   end
-
 
   def test_constructor
     @msg = GmailMailer::Message.new("djharperuk@gmail.com","Subject","Body")
@@ -67,6 +72,13 @@ class TestMessage < Test::Unit::TestCase
     expected = to.join(";")
     assert_equal(expected, @msg.to, "Multiple receivers not detected")
   end
+
+  def test_to_with_array_of_more_than_acceptable_recipients
+    to = ("a@b.c,"*501).split(',')
+    assert_raise(ArgumentError) {
+      @msg.to= to
+    }
+  end
   
 
   def test_add_attachment
@@ -98,5 +110,52 @@ class TestMessage < Test::Unit::TestCase
     assert_raise(ArgumentError) { @msg.add_attachment(@dir) }
   end
 
+  def test_get_attachment_size
+    begin
+      file = "file5"
+      create_file(file, 1024*1024)
+      size = File.size(file)
+      @msg.add_attachment(file)
+      assert_equal(size, @msg.get_attachments_size)
+    ensure
+      FileUtils.rm(file)
+    end
+  end
+
+  def test_get_attachment_size_with_multiple_attachments
+    begin
+      file = "file5"
+      file2 = "file6"
+      create_file(file, 1024*1024)
+      create_file(file2,(1024*1024)*5)
+      size = File.size(file)
+      size2 = File.size(file2)
+      @msg.add_attachment(file)
+      @msg.add_attachment(file2)
+      assert_equal(size+size2, @msg.get_attachments_size)
+    ensure
+      FileUtils.rm(file)
+      FileUtils.rm(file2)
+    end
+  end
+
+  def test_add_attachment_with_over_limit
+      begin
+
+        file = "file5"
+        file2 = "file6"
+        create_file(file, 1024*1024)
+        create_file(file2,(1024*1024)*25)
+        size = File.size(file)
+        size2 = File.size(file2)
+        assert_raise(ArgumentError) {
+          @msg.add_attachment(file)
+          @msg.add_attachment(file2)
+        }
+      ensure
+        FileUtils.rm(file)
+        FileUtils.rm(file2)
+      end
+  end
 end
 

@@ -13,11 +13,11 @@ class TestMailSender < Test::Unit::TestCase
   end
 
   def test_send_message
-    assert_nothing_raised {
+   assert_nothing_raised {
       mailer = GmailMailer::Mailer.new(@config)
       message = GmailMailer::Message.new(@config[:email], "Hello Subject", "Hello Body")
       mailer.send(message)
-    }
+   }
   end
 end
 
