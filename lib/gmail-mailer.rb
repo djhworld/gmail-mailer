@@ -38,7 +38,7 @@ module GmailMailer
       rescue => message
         puts "Error occured attempting to send mail => #{message}"
 
-        raise Exception, message if(retry_attempts > MAX_RETRY)
+        raise message if(retry_attempts > MAX_RETRY)
         puts "Retry: #{retry_attempts+1}/#{MAX_RETRY+1}"
         retry_attempts = retry_attempts.succ
         retry
