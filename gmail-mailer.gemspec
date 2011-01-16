@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gmail-mailer}
-  s.version = "0.4.2"
+  s.version = "0.4.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Harper"]
-  s.date = %q{2011-01-14}
+  s.date = %q{2011-01-16}
   s.description = %q{Programatically send emails using a given gmail account. No username/passwords needed, just use your OAUTH credentials}
   s.email = %q{djharperuk@gmail.com}
   s.extra_rdoc_files = [
