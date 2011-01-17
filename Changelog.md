@@ -1,5 +1,8 @@
 # gmail-mailer Changelog
 
+### 0.4.5
+* Removed restriction for 1.9.2
+
 ### 0.4.3
 * Added attachment limits and recipient limits for messages
 * Added retry functionality on sending mail

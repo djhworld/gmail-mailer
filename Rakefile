@@ -19,7 +19,6 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Programatically send emails using a given gmail account. No username/passwords needed, just use your OAUTH credentials}
   gem.email = "djharperuk@gmail.com"
   gem.authors = ["Daniel Harper"]
-  gem.required_ruby_version = ">= 1.9.2"
   gem.add_dependency "mail","~> 2.2.14"
   gem.add_dependency "gmail_xoauth", "~> 0.3.0"
 end
