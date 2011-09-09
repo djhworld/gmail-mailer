@@ -12,6 +12,7 @@ This has only been tested on ruby 1.9.2
 
 ### Setting up gmail-mailer
 You will need to provide mailer with a hashmap containing the ouath details for your account.
+    
     email_credentials = 
     {
         :smtp_oauth_token=>"<your outh_token>",
